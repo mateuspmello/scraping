@@ -51,3 +51,27 @@ def followExternalOnly(startingSite):
     followExternalOnly(externalLink)
 
 # followExternalOnly('http://google.com')
+
+def getAllExternalLinks(siteUrl):
+
+    html = urlopen(siteUrl)
+    domain = f'{urlparse(siteUrl).scheme}://{urlparse(siteUrl).netloc}'
+    bs = BeautifulSoup(html, 'html.parser')
+    internalLinks = getInternalLinks(bs, domain)
+    externalLinks = getExternalLinks(bs, domain)
+
+    for link in externalLinks:
+        if link not in allExtLinks:
+            allExtLinks.add(link)
+            print(link)
+        
+    for link in internalLinks:
+        if link not in allIntLinks:
+            allIntLinks.add(link)
+            print(link)
+
+# allIntLinks.add('http://oreilly.com')
+getAllExternalLinks('http://google.com')
+    
+ 
+# print(allExtLinks)
